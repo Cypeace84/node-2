@@ -138,30 +138,28 @@ const startApp = async () => {
     const fileInputImage = './img/' + options.inputImage;
     // console.log('file input image', fileInputImage);
 
-    if (
-      !(await isFiles(fileInputImage)) &&
-      !(await isFiles(fileWatermarkImage))
-    ) {
+    const isFileInputImageExists = await isFiles(fileInputImage);
+    const isFileWatermarkImageExists = await isFiles(fileWatermarkImage);
+    if (!isFileInputImageExists && !isFileInputImageExists) {
       return console.log(
         `${fileInputImage} 'and' ${fileWatermarkImage} 'does not exists'`
       );
     }
-    if (!(await isFiles(fileInputImage))) {
+    if (!isFileInputImageExists) {
       return console.log(`${fileInputImage} 'does not exist'`);
     }
 
-    if (!(await isFiles(fileWatermarkImage))) {
+    if (!isFileWatermarkImageExists) {
       return console.log(`${fileWatermarkImage} 'does not exist'`);
-    } else {
-      try {
-        addImageWatermarkToImage(
-          './img/' + options.inputImage,
-          './img/' + prepareOutputFilename(options.inputImage),
-          './img/' + options.watermarkImage
-        );
-      } catch (error) {
-        console.log('Something went wrong... Try again!');
-      }
+    }
+    try {
+      addImageWatermarkToImage(
+        './img/' + options.inputImage,
+        './img/' + prepareOutputFilename(options.inputImage),
+        './img/' + options.watermarkImage
+      );
+    } catch (error) {
+      console.log('Something went wrong... Try again!');
     }
   }
 };
